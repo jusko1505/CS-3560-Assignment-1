@@ -1,28 +1,36 @@
-import java.util.Properties;
+import java.util.Random;
+import java.util.UUID;;
 
 public class Student {
     private String name;
-    private int numberOfQuestions;
-    private char[] answers;
+    private boolean[] choices;
+    private Random random = new Random();
+    private UUID uuid = new UUID();
 
     public String getName() {
         return name;
     }
     public void setName(String name) {
-        this.name = name;
+        this.name = UUID.randomUUID().toString(); 
     }
-    public int getNumberOfQuestions() {
-        return numberOfQuestions;
+    public int scanQuestion(Question question) {
+        return question.getNumberOfOptions();
     }
-    public void setNumberOfQuestions(int numberOfQuestions) {
-        this.numberOfQuestions = numberOfQuestions;
-    }
-
-    public void answerQuestion(){
-        this.answers = new char[numberOfQuestions];
-        for(int i = 0; i<this.getNumberOfQuestions(); i++){
-            answers[i] = rand
+    public void answerQuestion(multipleChoiceQuestion mcq){
+        this.choices = new boolean[scanQuestion(mcq)];
+        for(int i = 0; i<choices.length; i++){
+            choices[i] = random.nextBoolean();
         }
+        
+    }
+    public void answerQuestion(trueFalseQuestion tfq){
+        this.choices = new boolean[scanQuestion(tfq)];
+        for(int i = 0; i<choices.length; i++){
+            choices[i] = random.nextBoolean();
+        }
+    }
+    public boolean[] getChoices(){
+        return choices;
     }
     
 }
