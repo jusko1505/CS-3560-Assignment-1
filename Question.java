@@ -1,13 +1,16 @@
 // A question has a number of options and answers.
 
 import java.util.Random;
-public class Question {
-    protected Random random = new Random();
+public interface Question {
+    public Random random = new Random();
+    public boolean[] getAnswers();
+    public int getNumberOfOptions();
+    public void generateAnswers();
 }
 
-class multipleChoiceQuestion extends Question{
+class multipleChoiceQuestion implements Question{
     private int numberOfOptions = 5;
-    private boolean[] answers =  new int[numberOfOptions];
+    private boolean[] answers =  new boolean[numberOfOptions];
 
     public boolean[] getAnswers() {
         return answers;
@@ -17,15 +20,15 @@ class multipleChoiceQuestion extends Question{
     }
     public void generateAnswers(){
         for(int i = 0; i<this.getNumberOfOptions(); i++){
-            answers[i] = this.random.nextBoolean();
+            answers[i] = random.nextBoolean();
         }
     }
 
 }
 
-class trueFalseQuestion extends Question{
+class trueFalseQuestion implements Question{
     private int numberOfOptions = 2;
-    private boolean[] answers = new int[numberOfOptions];
+    private boolean[] answers = new boolean[numberOfOptions];
 
     public boolean[] getAnswers() {
         return answers;

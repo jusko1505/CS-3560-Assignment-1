@@ -1,9 +1,10 @@
+import java.util.*;
 public class votingService {
     // grades questions
     //keeps track of # correct and incorrect?
     //String holds uuid, and List holds correct and incorrect answers?
     private Question question;
-    private int[] numberCorrectAndIncorrect;
+    private int[] numberCorrectAndIncorrect = new int[2];
     private int[] numberOfEachAnswerChosen;
     static private Map<Student, boolean[]> studentTracker = new HashMap<Student, boolean[]>();
 
@@ -22,15 +23,16 @@ public class votingService {
         return numberCorrectAndIncorrect;
     }
    
-    public void gradeStudent(student student){
-        Question question = getQuestion();
+    public void gradeStudent(Student student){
+        //Question question = getQuestion();
         boolean[] studentChoices = student.getChoices();
         boolean[] answers = getQuestion().getAnswers();
-        int[] numberCorrectAndIncorrect = new int[2];
-        int[] numberOfEachAnswerChosen = new int[question.getNumberOfOptions()];
+        //int[] numberCorrectAndIncorrect = new int[2];
+        //int[] numberOfEachAnswerChosen = new int[question.getNumberOfOptions()];
 
         //if !studentTracker.containsKey(student) -> studentTracker.put(Student, new List.add(studentChoices))
-        if(studentTracker.put(student, studentChoices)){
+        if(!studentTracker.containsKey((student))){
+            studentTracker.put(student, studentChoices);
             if(studentChoices.equals(answers)){
                 numberCorrectAndIncorrect[0]++;
             }
@@ -103,6 +105,10 @@ public class votingService {
     }
     public void setQuestion(Question question) {
         this.question = question;
+        numberOfEachAnswerChosen(question);
+    }
+    private void numberOfEachAnswerChosen(Question question){
+        this.numberOfEachAnswerChosen = new int[question.getNumberOfOptions()];
     }
     
 }

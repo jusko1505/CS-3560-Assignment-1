@@ -1,37 +1,51 @@
-import java.util.List;
-import java.util.Random;
+import java.util.*;
 
 import javax.xml.stream.events.StartDocument;
 public class simulationDriver {
     static Random random = new Random();
 
-    public Question createQuestion(){
+    public Question selectTypeOfQuestion(){
         int randomInteger = random.nextInt();
-        Question ques;
         if(randomInteger%2==0){
-            ques = new trueFalseQuestion();
+            trueFalseQuestion ques = new trueFalseQuestion();
             ques.generateAnswers();
+            return ques;
         }
         else{
-            ques = new multipleChoiceQuestion();
+           multipleChoiceQuestion ques = new multipleChoiceQuestion();
             ques.generateAnswers();
+            return ques;
         }
-        return ques;
+        
     }
 
-    public List<Students> createStudentsAndAnswerQuestions(Question q){
+    public List<Student> createStudentsAndAnswerQuestions(Question q){
         
         int numberStudents = random.nextInt(50);
-        List ll = new ArrayList(50);
+        System.out.println("number of students: "+numberStudents);
+        List<Student> ll = new ArrayList<Student>(numberStudents);
         for(int i = 0; i < numberStudents; i++){
             Student student = new Student();
             student.answerQuestion(q);
             ll.add(student);
         }
+        return ll;
     }
 
 
+
     public static void main(String[] args) {
+        simulationDriver sd = new simulationDriver();
+        votingService vs = new votingService();
+        Question question = sd.selectTypeOfQuestion();
+        List<Student> listOfStudents = sd.createStudentsAndAnswerQuestions(question);
+        vs.setQuestion(question);
+
+        for(Student student: listOfStudents){
+            vs.gradeStudent(student);
+        }
+        System.out.println("List of students length: "+ listOfStudents.size());
+        vs.outputStatistics();
         
     }
     
