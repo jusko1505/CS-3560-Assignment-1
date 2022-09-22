@@ -24,13 +24,9 @@ public class votingService {
     }
    
     public void gradeStudent(Student student){
-        //Question question = getQuestion();
         boolean[] studentChoices = student.getChoices();
         boolean[] answers = getQuestion().getAnswers();
-        //int[] numberCorrectAndIncorrect = new int[2];
-        //int[] numberOfEachAnswerChosen = new int[question.getNumberOfOptions()];
 
-        //if !studentTracker.containsKey(student) -> studentTracker.put(Student, new List.add(studentChoices))
         if(!studentTracker.containsKey((student))){
             studentTracker.put(student, studentChoices);
             
@@ -51,7 +47,7 @@ public class votingService {
         else{
             //revert the student's old responses
             boolean[] oldStudentChoices = studentTracker.get(student);
-            if(oldStudentChoices.equals(answers)){
+            if(Arrays.equals(studentChoices, answers)){
                 numberCorrectAndIncorrect[0]--;
             }
             else{
@@ -65,7 +61,7 @@ public class votingService {
             //update the student's new response in the hashmap
             studentTracker.put(student, studentChoices);
             //add the student's new response into the hashmap
-            if(studentChoices.equals(answers)){
+            if(Arrays.equals(studentChoices, answers)){
                 numberCorrectAndIncorrect[0]++;
             }
             else{
@@ -76,13 +72,6 @@ public class votingService {
                     numberOfEachAnswerChosen[i]++;
                 }
             }
-            //maybe instead of a set, studentTracker can be a HashMap<Student, boolean[]>
-            //in this else statement, access at key student to retrieve the boolean[]
-            //then we do the reverse of what happens in the if statement using the old boolean[]
-            // so, if student choices equals answers then numbercorrectincorrect[0]--;
-            // else number correct and incorrect[i]--;
-            //and so on with the for loop after it -> if studentchoices[i] then numberofeach[i]--;
-            //then we do the original logic(if statement) with the updated student choices[]
         }
         setNumberCorrectAndIncorrect(numberCorrectAndIncorrect);
         setNumberOfEachAnswerChosen(numberOfEachAnswerChosen);
