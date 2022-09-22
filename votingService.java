@@ -33,11 +33,14 @@ public class votingService {
         //if !studentTracker.containsKey(student) -> studentTracker.put(Student, new List.add(studentChoices))
         if(!studentTracker.containsKey((student))){
             studentTracker.put(student, studentChoices);
-            if(studentChoices.equals(answers)){
+            
+            if(Arrays.equals(studentChoices, answers)){
                 numberCorrectAndIncorrect[0]++;
+                //System.out.println("correct!");
             }
             else{
                 numberCorrectAndIncorrect[1]++;
+                //System.out.println("incorrect!");
             }
             for(int i = 0; i < answers.length; i++){
                 if(studentChoices[i]){

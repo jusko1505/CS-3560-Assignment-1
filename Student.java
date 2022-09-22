@@ -15,18 +15,30 @@ public class Student {
     public int scanQuestion(Question question) {
         return question.getNumberOfOptions();
     }
-    public void answerQuestion(multipleChoiceQuestion q){
-        this.choices = new boolean[scanQuestion(q)];
-        for(int i = 0; i<choices.length; i++){
-            choices[i] = random.nextBoolean();
+    public void answerQuestion(Question question){
+        this.choices = new boolean[scanQuestion(question)];
+        if(scanQuestion(question) == 2){
+            boolean bool = random.nextBoolean();
+            choices[0] = bool;
+            choices[1] = !bool;
         }
-    }
+        else{
+            for(int i = 0; i<choices.length; i++){
+                choices[i] = random.nextBoolean();
+            }
+        }
+        /* for(int i = 0; i<choices.length; i++){
+            choices[i] = random.nextBoolean();
+        }*/
+    }   
+    /* 
     public void answerQuestion(trueFalseQuestion q){
         this.choices = new boolean[scanQuestion(q)];
         boolean bool = random.nextBoolean();
         choices[0] = bool;
         choices[1] = !bool;
     }
+    */
    
     public boolean[] getChoices(){
         return choices;
