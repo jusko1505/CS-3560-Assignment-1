@@ -1,11 +1,14 @@
 import java.util.*;
+
+// grades questions
 public class votingService {
-    // grades questions
-    //keeps track of # correct and incorrect?
-    //String holds uuid, and List holds correct and incorrect answers?
     private Question question;
     private int[] numberCorrectAndIncorrect = new int[2];
+
+    //tracks how many A's, B's, etc are chosen 
     private int[] numberOfEachAnswerChosen;
+
+    //maps a student with their answer sheet
     static private Map<Student, boolean[]> studentTracker = new HashMap<Student, boolean[]>();
 
     private void setNumberCorrectAndIncorrect(int[] numberCorrectAndIncorrect) {
@@ -15,28 +18,30 @@ public class votingService {
         this.numberOfEachAnswerChosen = numberOfEachAnswerChosen;
     }
 
-    public int[] getNumberOfEachAnswerChosen() {
+    private int[] getNumberOfEachAnswerChosen() {
         return numberOfEachAnswerChosen;
     }
     
-    public int[] getNumberCorrectAndIncorrect() {
+    private int[] getNumberCorrectAndIncorrect() {
         return numberCorrectAndIncorrect;
     }
-   
+
+    /* an answer is counted as correct if all of a student's choices
+     * matches the answer sheet: credit/ no credit 
+     */
     public void gradeStudent(Student student){
         boolean[] studentChoices = student.getChoices();
         boolean[] answers = getQuestion().getAnswers();
 
+        // first time a student submits an answer 
         if(!studentTracker.containsKey((student))){
             studentTracker.put(student, studentChoices);
             
             if(Arrays.equals(studentChoices, answers)){
                 numberCorrectAndIncorrect[0]++;
-                //System.out.println("correct!");
             }
             else{
                 numberCorrectAndIncorrect[1]++;
-                //System.out.println("incorrect!");
             }
             for(int i = 0; i < answers.length; i++){
                 if(studentChoices[i]){
@@ -44,8 +49,9 @@ public class votingService {
                 }
             }
         }
+        //a student submits an answer more than once
         else{
-            //revert the student's old responses
+            // remove the student's old responses
             boolean[] oldStudentChoices = studentTracker.get(student);
             if(Arrays.equals(studentChoices, answers)){
                 numberCorrectAndIncorrect[0]--;

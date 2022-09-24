@@ -1,22 +1,9 @@
 import java.util.*;
 
+// Pulls all the pieces together
 public class simulationDriver {
     static Random random = new Random();
 
-    public Question selectTypeOfQuestion(){
-        int randomInteger = random.nextInt();
-        if(randomInteger%2==0){
-            trueFalseQuestion ques = new trueFalseQuestion();
-            ques.generateAnswers();
-            return ques;
-        }
-        else{
-           multipleChoiceQuestion ques = new multipleChoiceQuestion();
-            ques.generateAnswers();
-            return ques;
-        }
-        
-    }
     public trueFalseQuestion createTrueFalseQuestion(){
         trueFalseQuestion ques = new trueFalseQuestion();
         ques.generateAnswers();
@@ -29,10 +16,14 @@ public class simulationDriver {
         return ques;
     }
 
+    /* 
+     * Creates a random number of students between 0 and 49
+     * Returns a list of Students who've already answered
+     * the given question
+    */
     public List<Student> createStudentsAndAnswerQuestions(Question q){
-        
         int numberStudents = random.nextInt(50);
-        System.out.println("number of students: "+numberStudents);
+        System.out.println("Number of students: "+numberStudents);
         List<Student> ll = new ArrayList<Student>(numberStudents);
         for(int i = 0; i < numberStudents; i++){
             Student student = new Student();
@@ -42,6 +33,12 @@ public class simulationDriver {
         return ll;
     }
 
+    /* 
+     * Main force driving the simulation
+     * Calls above method to create students and their choices
+     * Calls votingService to grade the students
+     * Prints the results into standard output
+     */
     public void simDrive(Question question){
         simulationDriver sd = new simulationDriver();
         votingService vs = new votingService();
@@ -51,11 +48,8 @@ public class simulationDriver {
         for(Student student: listOfStudents){
             vs.gradeStudent(student);
         }
-        System.out.println("List of students length: "+ listOfStudents.size());
         vs.outputStatistics();
     }
-
-
 
     public static void main(String[] args) {
         simulationDriver sd = new simulationDriver();
@@ -68,12 +62,6 @@ public class simulationDriver {
             multipleChoiceQuestion question = sd.createMultipleChoiceQuestion();
             sd.simDrive(question);
         }
-        
-        
     }
-    
-   
-
-   
 }
 
