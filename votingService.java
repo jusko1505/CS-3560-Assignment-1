@@ -9,7 +9,7 @@ public class votingService {
     private int[] numberOfEachAnswerChosen;
 
     //maps a student with their answer sheet
-    static private Map<Student, boolean[]> studentTracker = new HashMap<Student, boolean[]>();
+    private Map<Student, boolean[]> studentTracker = new HashMap<Student, boolean[]>();
 
     private void setNumberCorrectAndIncorrect(int[] numberCorrectAndIncorrect) {
         this.numberCorrectAndIncorrect = numberCorrectAndIncorrect;
